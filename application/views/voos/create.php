@@ -1,4 +1,4 @@
-<h2 class="my-5 ml-2"><?= $title; ?></h2>
+<h2 class="my-5"><?= $title; ?></h2>
 
 <?php echo form_open('voos/create_voo'); ?>
 	<div class="from-group">

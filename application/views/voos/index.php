@@ -1,4 +1,4 @@
-<h2 class="my-5 ml-2"><?= $title; ?></h2>
+<h2 class="my-5"><?= $title; ?></h2>
 
 <?php print_r($voos); ?>
 
@@ -82,7 +82,9 @@
 				<th style="background-color: #ddddddad;">Origem</th>
 				<th style="background-color: #ddddddad;">Destino</th>
 				<th style="background-color: #ddddddad;">Valor</th>
-				<th style="background-color: #ddddddad;">Actions</th>
+				<?php if($this->session->userdata('logged_in')) : ?>
+					<th style="background-color: #ddddddad;">Actions</th>
+				<?php endif; ?>
 			</tr>
 		</thead>
 
@@ -100,17 +102,20 @@
 						echo "<td>".$voo['origem']."</td>";
 						echo "<td>".$voo['destino']."</td>";
 						echo "<td>".$voo['valor']." €</td>";
-						echo "<td>";
-						echo "<div style='display:flex;align-items:center;justify-content:center;'>";
-						echo form_open('voos/edit/'.$voo['reserva_id']);
-						echo "<button type='submit' class='btn btn-info mr-3'>Edit</button>";
-						echo form_close();
-						echo form_open('voos/delete/'.$voo['reserva_id']);
-						echo "<button type='submit' class='btn btn-danger'>Delete</button>";
-						echo form_close();
-						echo "</div>";
-						echo "</td>";
-					 ?>
+
+						if($this->session->userdata('logged_in') && $this->session->userdata('user_id') == $voo['userId']) :
+							echo "<td>";
+							echo "<div style='display:flex;align-items:center;justify-content:center;'>";
+							echo form_open('voos/edit/'.$voo['reserva_id']);
+							echo "<button type='submit' class='btn btn-info mr-3'>Edit</button>";
+							echo form_close();
+							echo form_open('voos/delete/'.$voo['reserva_id']);
+							echo "<button type='submit' class='btn btn-danger'>Delete</button>";
+							echo form_close();
+							echo "</div>";
+							echo "</td>";
+						endif;
+					?>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
