@@ -1,15 +1,27 @@
-<h2 class="my-5"><?= $title; ?></h2>
+<h2 class="my-5"><?=$title;?></h2>
 
-<?php echo form_open('voos/create_voo'); ?>
-	<div class="from-group">
-		<select name="voo_id" class="form-control">
-			<?php foreach($voos as $voo) : ?>
-				<option value="<?php echo $voo['id']; ?>"><?php echo $voo['data']; ?> | <?php echo $voo['origem'] ?> | <?php echo $voo['destino']; ?></option>
-			<?php endforeach; ?>
-		</select>
+<?php print_r($voos); ?>
 
-		<button type="submit" class="btn btn-success float-right mt-3">
-			Create
-		</button>
-	</div>
-<?php echo form_close(); ?>
+<?php if(!$voos) : ?>
+	<h5 class="mt-5">No results found.</h5>
+<?php endif; ?>
+
+<?php if($voos) : ?>
+	<?php echo form_open('voos/create_reserva'); ?>
+		<div class="from-group">
+			<select name="voo_id" class="form-control">
+				<option></option>
+				
+				<?php foreach ($voos as $voo): ?>
+					<?php $data = date_create($voo['data']); ?>
+
+					<option value="<?php echo $voo['id']; ?>"><?php echo date_format($data, 'd/m/Y'); ?> | <?php echo $voo['nome'] ?> | <?php echo $voo['destino']; ?></option>
+				<?php endforeach;?>
+			</select>
+
+			<button type="submit" class="btn btn-success float-right mt-4">
+				Create
+			</button>
+		</div>
+	<?php echo form_close(); ?>
+<?php endif; ?>

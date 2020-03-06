@@ -1,5 +1,5 @@
-<!-- <?php if($this->session->userdata('user_id') == $voo['user_id']) : ?>
+<!-- <?php if ($this->session->userdata('user_id') == $voo['user_id']): ?>
 
-<?php endif; ?> -->
+<?php endif;?> -->
 
-<h2><?= $title; ?></h2>
+<h2><?=$title;?></h2>

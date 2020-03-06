@@ -50,6 +50,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 
+$route['voos/voo_create'] = 'voos/voo_create';
+$route['voos/search'] = 'voos/search';
+$route['voos/create_reserva'] = 'voos/create_reserva';
 $route['voos/create_voo'] = 'voos/create_voo';
 $route['voos/create'] = 'voos/create';
 $route['voos/(:any)'] = 'voos/view/$1';

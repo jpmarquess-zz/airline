@@ -1,95 +1,212 @@
-<?php 
-	class Voos extends CI_Controller {
-		public function index() {
-			$data['title'] = 'Voo';
+<?php
+class Voos extends CI_Controller
+{
+    public function index()
+    {
+        $data['title'] = 'Voo';
 
-			$data['voos'] = $this->voo_model->get_reserva();
-			
-			$this->load->view('templates/header');
-			$this->load->view('voos/index', $data);
-			$this->load->view('templates/footer');
-		}
+        if (!$this->session->userdata('logged_in')) {
+            $this->session->set_flashdata('login_required', 'You need to be logged in to view that page.');
 
-		public function create() {
-			// Check if user is logged in
-			if(!$this->session->userdata('logged_in')) {
-				$this->session->set_flashdata('login_required', 'You need to be logged in to view that page.');
+            redirect('users/login');
+        }
 
-				redirect('users/login');
-			}
+        if ($this->session->userdata('isAdmin')) {
+            $data['voos'] = $this->voo_model->get_reserva();
+            $data['origem'] = $this->voo_model->get_origem();
+            $data['destino'] = $this->voo_model->get_destino();
+        } else {
+            $data['voos'] = $this->voo_model->get_reserva_user($this->session->userdata('user_id'));
+        }
 
-			$data['title'] = 'Create Reserva';
+        $this->load->view('templates/header');
+        $this->load->view('voos/index', $data);
+        $this->load->view('templates/footer');
+    }
 
-			$data['voos'] = $this->voo_model->get_voos();
+    public function create()
+    {
+        // Check if user is logged in
+        if (!$this->session->userdata('logged_in')) {
+            $this->session->set_flashdata('login_required', 'You need to be logged in to view that page.');
 
-			$this->load->view('templates/header');
-			$this->load->view('voos/create', $data);
-			$this->load->view('templates/footer');
-		}
+            redirect('users/login');
+        }
 
-		public function create_voo() {
-			$nReserva = rand(100, 1000);
-			$valor    = rand(100, 1000);
+        $data['title'] = 'Create Reserva';
 
-			$data = array(
-				'userId'   => $this->session->userdata('user_id'),
-				'vooId'    => $this->input->post('voo_id'),
-				'nReserva' => $nReserva,
-				'valor'    => $valor
-			);
+        $data['voos'] = $this->voo_model->get_voos();
 
-			$this->db->insert('reserva', $data);
+        $this->load->view('templates/header');
+        $this->load->view('voos/create', $data);
+        $this->load->view('templates/footer');
+    }
 
-			redirect('voos');
-		}
+    // Create reserva
+    public function create_reserva()
+    {
+        // Check if user is logged in
+        if (!$this->session->userdata('logged_in')) {
+            $this->session->set_flashdata('login_required', 'You need to be logged in to view that page.');
 
-		public function delete($id) {
-			// Check if user is logged in
-			if(!$this->session->userdata('logged_in')) {
-				$this->session->set_flashdata('login_required', 'You need to be logged in to view that page.');
+            redirect('users/login');
+        }
+        
+        $nReserva = "EZ" . rand(100, 1000);
+        $valor = rand(100, 1000);
 
-				redirect('users/login');
-			}
+        $data = array(
+            'userId' => $this->session->userdata('user_id'),
+            'vooId' => $this->input->post('voo_id'),
+            'nReserva' => $nReserva,
+            'valor' => $valor
+        );
 
-			$this->voo_model->delete_voo($id);
+        $this->db->insert('reserva', $data);
 
-			$this->session->set_flashdata('reserva_deleted', 'Reserva with id '. $id .' has been deleted.');
+        $this->session->set_flashdata('create_reserva', 'Reserva was created successfully.');
 
-			redirect('voos');
-		}
+        redirect('voos');
+    }
 
-		public function edit($id) {
-			// Check if user is logged in
-			if(!$this->session->userdata('logged_in')) {
-				$this->session->set_flashdata('login_required', 'You need to be logged in to view that page.');
+    // Delete reserva
+    public function delete($id)
+    {
+        // Check if user is logged in
+        if (!$this->session->userdata('logged_in')) {
+            $this->session->set_flashdata('login_required', 'You need to be logged in to view that page.');
 
-				redirect('users/login');
-			}
+            redirect('users/login');
+        }
 
-			/*if($this->session->userdata('user_id') == $data['userId']) {
-				$this->session->set_flashdata('login_required', 'You need to be logged in to view that page.');
+        $this->voo_model->delete_voo($id);
 
-				redirect('voos');
-			}*/
+        $this->session->set_flashdata('reserva_deleted', 'Reserva with id ' . $id . ' has been deleted.');
 
-			$data['reserva'] = $this->voo_model->edit_voo($id);
-			$data['voos'] = $this->voo_model->get_voos();
+        redirect('voos');
+    }
 
-			if(empty($data['reserva']) || empty($data['voos'])) {
-				show_404();
-			}
+    // Edit reserva
+    public function edit($id)
+    {
+        // Check if user is logged in
+        if (!$this->session->userdata('logged_in')) {
+            $this->session->set_flashdata('login_required', 'You need to be logged in to view that page.');
 
-			$data['title'] = 'Edit reserva';
+            redirect('users/login');
+        }
 
-			$this->load->view('templates/header');
-			$this->load->view('voos/edit', $data);
-			$this->load->view('templates/footer');
-		}
+        $data['test'] = $this->voo_model->get_reserva_user($this->session->userdata('user_id'));
 
-		public function update($id) {
-			$this->voo_model->update($id);
+        if ($this->voo_model->get_reserva_user($this->session->userdata('user_id')) == $this->session->userdata('user_id')) {
+            $this->session->set_flashdata('login_required', 'ERROR.');
 
-			redirect('voos');
-		}
-	}
- ?>
+            redirect('users/login');
+        }
+
+        $data['reserva'] = $this->voo_model->edit_voo($id);
+        $data['voos'] = $this->voo_model->get_voos();
+
+        if (empty($data['reserva']) || empty($data['voos'])) {
+            show_404();
+        }
+
+        $data['title'] = 'Edit Reserva';
+
+        $this->load->view('templates/header');
+        $this->load->view('voos/edit', $data);
+        $this->load->view('templates/footer');
+    }
+
+    // Update reserva
+    public function update($id)
+    {
+        $this->voo_model->update($id);
+
+        $this->session->set_flashdata('edit_reserva', 'Reserva with id: ' . $id . ' was updated successfully.');
+
+        redirect('voos');
+    }
+
+    // Search reserva
+    /*public function search()
+    {   
+        // Check if user is logged in
+        if (!$this->session->userdata('logged_in')) {
+            $this->session->set_flashdata('login_required', 'You need to be logged in to view that page.');
+
+            redirect('users/login');
+        }
+
+        //Retrieve all filters from POST if set
+        $search["user_id"] = $this->session->userdata('user_id');
+        $search["voo"] = $this->input->post("voo")??"";
+        $search["voo"] = $this->input->post("voo")??"";
+        $search["voo"] = $this->input->post("voo")??"";
+        $search["voo"] = $this->input->post("voo")??"";
+        $search["voo"] = $this->input->post("voo")??"";
+
+
+
+
+
+
+
+        $data['reservas'] = $this->voo_model->search($this->session->userdata('user_id'));
+
+        $data['title'] = 'Search Reserva';
+
+        $this->load->view('templates/header');
+        $this->load->view('voos/search', $data);
+        $this->load->view('templates/footer');
+    }*/
+
+    public function voo_create()
+    {   
+        // Check if user is logged in
+        if (!$this->session->userdata('logged_in')) {
+            $this->session->set_flashdata('login_required', 'You need to be logged in to view that page.');
+
+            redirect('users/login');
+        }
+
+        $data['title'] = 'Create Voo';
+
+        $this->load->view('templates/header');
+        $this->load->view('voos/voo_create', $data);
+        $this->load->view('templates/footer');
+    }
+
+    // Create voo if logged in user is admin
+    public function create_voo()
+    {   
+        // Check if user is logged in
+        if (!$this->session->userdata('logged_in')) {
+            $this->session->set_flashdata('login_required', 'You need to be logged in to view that page.');
+
+            redirect('users/login');
+        }
+
+        $n_Voo = "TAP" . rand(100, 1000);
+
+        $this->db->insert('origem', array("nome" => $this->input->post('origem')));
+        $id_origem = $this->db->insert_id();
+
+        $this->db->insert('destino', array("nome" => $this->input->post('origem')));
+        $id_destino = $this->db->insert_id();
+
+        $data = array(
+            'nVoo' => $n_Voo,
+            'data' => $this->input->post('data'),
+            'origemId' => $id_origem,
+            'destinoId' => $id_destino
+        );
+
+        $this->db->insert('voo', $data);
+
+        // Set Message
+        $this->session->set_flashdata('create_reserva', 'Voo was created successfully.');
+
+        redirect('voos');
+    }
+}
