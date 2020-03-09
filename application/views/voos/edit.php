@@ -17,7 +17,7 @@
 			<?php foreach ($voos as $voo): ?>
 				<?php $data = date_create($voo['data']);?>
 
-				<option value="<?php echo $voo['id']; ?>"><?php echo $voo['id']; ?> | <?php echo date_format($data, 'd/m/Y'); ?> | <?php echo $voo['origem'] ?> | <?php echo $voo['destino']; ?></option>
+				<option value="<?php echo $voo['vooId']; ?>"><?php echo $voo['nVoo']; ?> | <?php echo date_format($data, 'd/m/Y'); ?> | <?php echo $voo['origemNome'] ?> --> <?php echo $voo['destinoNome']; ?></option>
 			<?php endforeach;?>
 		</select>
 

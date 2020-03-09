@@ -63,88 +63,108 @@
 
     <?php if ($this->session->flashdata('user_loggedin')): ?>
       <?php
-          echo '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
-          echo '<p class="m-0">' . $this->session->flashdata('user_loggedin') . '</p>';
-          echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-          echo '<span aria-hidden="true">&times;</span>';
-          echo '</button>';
-          echo '</div>';
+          $output  = '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
+          $output .= '<p class="m-0">' . $this->session->flashdata('user_loggedin') . '</p>';
+          $output .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+          $output .= '<span aria-hidden="true">&times;</span>';
+          $output .= '</button>';
+          $output .= '</div>';
+          echo $output;
         ?>
     <?php endif; ?>
 
     <?php if ($this->session->flashdata('user_loggedout')): ?>
       <?php
-          echo '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
-          echo '<p class="m-0">' . $this->session->flashdata('user_loggedout') . '</p>';
-          echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-          echo '<span aria-hidden="true">&times;</span>';
-          echo '</button>';
-          echo '</div>';
+          $output  = '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
+          $output .= '<p class="m-0">' . $this->session->flashdata('user_loggedout') . '</p>';
+          $output .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+          $output .= '<span aria-hidden="true">&times;</span>';
+          $output .= '</button>';
+          $output .= '</div>';
+          echo $output;
         ?>
     <?php endif; ?>
 
     <?php if ($this->session->flashdata('user_registered')): ?>
       <?php
-          echo '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
-          echo '<p class="m-0">' . $this->session->flashdata('user_registered') . '</p>';
-          echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-          echo '<span aria-hidden="true">&times;</span>';
-          echo '</button>';
-          echo '</div>';
+          $output  = '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
+          $output .= '<p class="m-0">' . $this->session->flashdata('user_registered') . '</p>';
+          $output .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+          $output .= '<span aria-hidden="true">&times;</span>';
+          $output .= '</button>';
+          $output .= '</div>';
+          echo $output;
         ?>
     <?php endif; ?>
 
     <?php if ($this->session->flashdata('login_failed')): ?>
       <?php
-          echo '<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">';
-          echo '<p class="m-0">' . $this->session->flashdata('login_failed') . '</p>';
-          echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-          echo '<span aria-hidden="true">&times;</span>';
-          echo '</button>';
-          echo '</div>';
+          $output  = '<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">';
+          $output .= '<p class="m-0">' . $this->session->flashdata('login_failed') . '</p>';
+          $output .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+          $output .= '<span aria-hidden="true">&times;</span>';
+          $output .= '</button>';
+          $output .= '</div>';
+          echo $output;
         ?>
     <?php endif; ?>
 
     <?php if ($this->session->flashdata('login_required')): ?>
       <?php
-          echo '<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">';
-          echo '<p class="m-0">' . $this->session->flashdata('login_required') . '</p>';
-          echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-          echo '<span aria-hidden="true">&times;</span>';
-          echo '</button>';
-          echo '</div>';
+          $output  = '<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">';
+          $output .= '<p class="m-0">' . $this->session->flashdata('login_required') . '</p>';
+          $output .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+          $output .= '<span aria-hidden="true">&times;</span>';
+          $output .= '</button>';
+          $output .= '</div>';
+          echo $output;
         ?>
     <?php endif; ?>
 
     <?php if ($this->session->flashdata('reserva_deleted')): ?>
       <?php
-          echo '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
-          echo '<p class="m-0">' . $this->session->flashdata('reserva_deleted') . '</p>';
-          echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-          echo '<span aria-hidden="true">&times;</span>';
-          echo '</button>';
-          echo '</div>';
+          $output  = '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
+          $output .= '<p class="m-0">' . $this->session->flashdata('reserva_deleted') . '</p>';
+          $output .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+          $output .= '<span aria-hidden="true">&times;</span>';
+          $output .= '</button>';
+          $output .= '</div>';
+          echo $output;
         ?>
     <?php endif; ?>
 
     <?php if ($this->session->flashdata('edit_reserva')): ?>
       <?php
-          echo '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
-          echo '<p class="m-0">' . $this->session->flashdata('edit_reserva') . '</p>';
-          echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-          echo '<span aria-hidden="true">&times;</span>';
-          echo '</button>';
-          echo '</div>';
+          $output  = '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
+          $output .= '<p class="m-0">' . $this->session->flashdata('edit_reserva') . '</p>';
+          $output .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+          $output .= '<span aria-hidden="true">&times;</span>';
+          $output .= '</button>';
+          $output .= '</div>';
+          echo $output;
         ?>
     <?php endif; ?>
 
     <?php if ($this->session->flashdata('create_reserva')): ?>
       <?php
-          echo '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
-          echo '<p class="m-0">' . $this->session->flashdata('create_reserva') . '</p>';
-          echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-          echo '<span aria-hidden="true">&times;</span>';
-          echo '</button>';
-          echo '</div>';
+          $output  = '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">';
+          $output .= '<p class="m-0">' . $this->session->flashdata('create_reserva') . '</p>';
+          $output .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+          $output .= '<span aria-hidden="true">&times;</span>';
+          $output .= '</button>';
+          $output .= '</div>';
+          echo $output;
+        ?>
+    <?php endif; ?>
+
+    <?php if ($this->session->flashdata('search')): ?>
+      <?php
+          $output  = '<div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">';
+          $output .= '<p class="m-0">' . $this->session->flashdata('search') . '</p>';
+          $output .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+          $output .= '<span aria-hidden="true">&times;</span>';
+          $output .= '</button>';
+          $output .= '</div>';
+          echo $output;
         ?>
     <?php endif; ?>

@@ -5,6 +5,8 @@ class Voos extends CI_Controller
     {
         $data['title'] = 'Voo';
 
+        $data['search'] = "";
+
         if (!$this->session->userdata('logged_in')) {
             $this->session->set_flashdata('login_required', 'You need to be logged in to view that page.');
 
@@ -17,6 +19,8 @@ class Voos extends CI_Controller
             $data['destino'] = $this->voo_model->get_destino();
         } else {
             $data['voos'] = $this->voo_model->get_reserva_user($this->session->userdata('user_id'));
+            $data['origem'] = $this->voo_model->get_origem();
+            $data['destino'] = $this->voo_model->get_destino();
         }
 
         $this->load->view('templates/header');
@@ -129,7 +133,7 @@ class Voos extends CI_Controller
     }
 
     // Search reserva
-    /*public function search()
+    public function search()
     {   
         // Check if user is logged in
         if (!$this->session->userdata('logged_in')) {
@@ -139,27 +143,53 @@ class Voos extends CI_Controller
         }
 
         //Retrieve all filters from POST if set
-        $search["user_id"] = $this->session->userdata('user_id');
-        $search["voo"] = $this->input->post("voo")??"";
-        $search["voo"] = $this->input->post("voo")??"";
-        $search["voo"] = $this->input->post("voo")??"";
-        $search["voo"] = $this->input->post("voo")??"";
-        $search["voo"] = $this->input->post("voo")??"";
+        $search_options['nVoo'] = $this->input->post('voo');
+        $search_options['data'] = $this->input->post('voo-data');
+        $search_options['origemId'] = $this->input->post('voo_origem');
+        $search_options['destinoId'] = $this->input->post('voo_destino');
+        $search_options['nReserva'] = $this->input->post('reserva');
+        $search_options['nome'] = $this->input->post('passageiro');
+        $search_options['nif'] = $this->input->post('nif');
+        $search_options['identificacao'] = $this->input->post('identificacao');
 
+        $data['search'] = $this->voo_model->search($this->session->userdata('user_id'));
 
+        if(isset($search_options['nVoo']) and !empty($search_options['nVoo'])) {
+            $data['search'] = $this->voo_model->search($search_options);
+        } 
+        if(isset($search_options['data']) and !empty($search_options['data'])) {
+            $data['search'] = $this->voo_model->search($search_options);
+        }
+        if(isset($search_options['origemId']) and !empty($search_options['origemId'])) {
+            $data['search'] = $this->voo_model->search($search_options);
+        }
+        if(isset($search_options['destinoId']) and !empty($search_options['destinoId'])) {
+            $data['search'] = $this->voo_model->search($search_options);
+        }
+        if(isset($search_options['nReserva']) and !empty($search_options['nReserva'])) {
+            $data['search'] = $this->voo_model->search($search_options);
+        }
+        if(isset($search_options['nome']) and !empty($search_options['nome'])) {
+            $data['search'] = $this->voo_model->search($search_options);
+        }
+        if(isset($search_options['nif']) and !empty($search_options['nif'])) {
+            $data['search'] = $this->voo_model->search($search_options);
+        }
+        if(isset($search_options['identificacao']) and !empty($search_options['identificacao'])) {
+            $data['search'] = $this->voo_model->search($search_options);
+        }
 
+        $data['voos'] = "";
 
-
-
-
-        $data['reservas'] = $this->voo_model->search($this->session->userdata('user_id'));
-
-        $data['title'] = 'Search Reserva';
+        $data['origem'] = $this->voo_model->get_origem();
+        $data['destino'] = $this->voo_model->get_destino();
+        
+        $data['title'] = 'Voo';
 
         $this->load->view('templates/header');
-        $this->load->view('voos/search', $data);
+        $this->load->view('voos/index', $data);
         $this->load->view('templates/footer');
-    }*/
+    }
 
     public function voo_create()
     {   
@@ -188,16 +218,19 @@ class Voos extends CI_Controller
         }
 
         $n_Voo = "TAP" . rand(100, 1000);
+        $vooData = date_create($this->input->post('data'));
+        $test = date_format($vooData, "Y-m-d H:i:s");
 
+        // Get valor input da origem e destino e em seguida é guardado o id do record inserido
         $this->db->insert('origem', array("nome" => $this->input->post('origem')));
         $id_origem = $this->db->insert_id();
 
-        $this->db->insert('destino', array("nome" => $this->input->post('origem')));
+        $this->db->insert('destino', array("nome" => $this->input->post('destino')));
         $id_destino = $this->db->insert_id();
 
         $data = array(
             'nVoo' => $n_Voo,
-            'data' => $this->input->post('data'),
+            'data' => $test,
             'origemId' => $id_origem,
             'destinoId' => $id_destino
         );
