@@ -32,6 +32,8 @@ class Voo_model extends CI_Model
 
     public function get_origem()
     {
+        $this->db->select('nome');
+        $this->db->distinct();
         $query = $this->db->get('origem');
 
         return $query->result_array();
@@ -39,7 +41,9 @@ class Voo_model extends CI_Model
 
     public function get_destino()
     {
-        $query = $this->db->get_where('destino');
+        $this->db->select('nome');
+        $this->db->distinct();
+        $query = $this->db->get('destino');
     
         return $query->result_array();
     }
@@ -48,9 +52,9 @@ class Voo_model extends CI_Model
     public function get_voos()
     {
         $this->db->select(
-                'voo.id as vooId, voo.nVoo, voo.data, voo.origemId, voo.destinoId,
-                origem.id, origem.nome as origemNome,
-                destino.id, destino.nome as destinoNome'
+            'voo.id as vooId, voo.nVoo, voo.data, voo.origemId, voo.destinoId,
+            origem.id, origem.nome as origemNome,
+            destino.id, destino.nome as destinoNome'
         );
         $this->db->join('origem', 'origem.id = voo.origemId');
         $this->db->join('destino', 'destino.id = voo.destinoId');
@@ -79,7 +83,7 @@ class Voo_model extends CI_Model
     public function update($id)
     {
         $data = array(
-            'vooId' => $this->input->post('voo_id'),
+            'vooId'      => $this->input->post('voo_id'),
             'updated_at' => date("Y-m-d H:i:s")
         );
 
@@ -111,11 +115,11 @@ class Voo_model extends CI_Model
     // Search pelo número do voo
     public function search($search_options)
     {
+        $data = array();
+
         if(!$this->session->userdata('isAdmin')) {
             $data = array("userId" => $this->session->userdata('user_id'));
         }
-
-        $data = array("userId" => $this->session->userdata('user_id'));
 
         if(!empty($search_options['nVoo'])) {
             $data['nVoo'] = $search_options['nVoo'];
@@ -123,11 +127,11 @@ class Voo_model extends CI_Model
         if(!empty($search_options['data'])) {
             $data['data'] = $search_options['data'];
         }
-        if(!empty($search_options['origemId'])) {
-            $data['origemId'] = $search_options['origemId'];
+        if(!empty($search_options['origemNome'])) {
+            $data['origem.nome'] = $search_options['origemNome'];
         }
-        if(!empty($search_options['destinoId'])) {
-            $data['destinoId'] = $search_options['destinoId'];
+        if(!empty($search_options['destinoNome'])) {
+            $data['destino.nome'] = $search_options['destinoNome'];
         }
         if(!empty($search_options['nReserva'])) {
             $data['nReserva'] = $search_options['nReserva'];
@@ -146,8 +150,8 @@ class Voo_model extends CI_Model
             'reserva.id as reservaId, reserva.userId, reserva.nReserva, reserva.valor,
             users.id, users.nome, users.nif, users.identificacao,
             voo.id, voo.nVoo, voo.data,
-            origem.id as origemId, origem.nome as origemNome,
-            destino.id as destinoId, destino.nome as destinoNome'
+            origem.id, origem.nome as origemNome,
+            destino.id, destino.nome as destinoNome'
         );
         $this->db->join('users', 'users.id = reserva.userId');
         $this->db->join('voo', 'voo.id = reserva.vooId');
@@ -157,5 +161,27 @@ class Voo_model extends CI_Model
         $query = $this->db->get_where('reserva', $data);
 
         return $query->result_array();
+    }
+
+    public function gato($id) {
+        $this->db->select(
+            'reserva.id as reservaId, reserva.userId, reserva.vooId, reserva.nReserva, reserva.valor, reserva.created_at,
+            users.id as catId, users.nome as userNome, users.nif,
+            voo.id as vooId, voo.nVoo, voo.data, voo.created_at,
+            origem.id, origem.nome as origemNome,
+            destino.id, destino.nome as destinoNome'
+        );
+        $this->db->join('users', 'users.id = reserva.userId');
+        $this->db->join('voo', 'voo.id = reserva.vooId');
+        $this->db->join('origem', 'origem.id = voo.origemId');
+        $this->db->join('destino', 'destino.id = voo.destinoId');
+        $this->db->order_by('reserva.valor', 'DESC');
+        $query = $this->db->get_where('reserva', array('userId' => $id));
+
+        if ($query->num_rows() != 0) {
+            return $query->row()->reservaId;
+        } else {
+            return false;
+        }
     }
 }

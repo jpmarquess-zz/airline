@@ -68,6 +68,7 @@ class Voos extends CI_Controller
 
         $this->db->insert('reserva', $data);
 
+        // Set Message
         $this->session->set_flashdata('create_reserva', 'Reserva was created successfully.');
 
         redirect('voos');
@@ -100,12 +101,12 @@ class Voos extends CI_Controller
             redirect('users/login');
         }
 
-        $data['test'] = $this->voo_model->get_reserva_user($this->session->userdata('user_id'));
+        $data['test'] = $this->voo_model->gato($this->session->userdata('user_id'));
 
-        if ($this->voo_model->get_reserva_user($this->session->userdata('user_id')) == $this->session->userdata('user_id')) {
+        if ($data['test'] != $id) {
             $this->session->set_flashdata('login_required', 'ERROR.');
 
-            redirect('users/login');
+            redirect('voos');
         }
 
         $data['reserva'] = $this->voo_model->edit_voo($id);
@@ -145,8 +146,8 @@ class Voos extends CI_Controller
         //Retrieve all filters from POST if set
         $search_options['nVoo'] = $this->input->post('voo');
         $search_options['data'] = $this->input->post('voo-data');
-        $search_options['origemId'] = $this->input->post('voo_origem');
-        $search_options['destinoId'] = $this->input->post('voo_destino');
+        $search_options['origemNome'] = $this->input->post('voo_origem');
+        $search_options['destinoNome'] = $this->input->post('voo_destino');
         $search_options['nReserva'] = $this->input->post('reserva');
         $search_options['nome'] = $this->input->post('passageiro');
         $search_options['nif'] = $this->input->post('nif');
@@ -160,10 +161,10 @@ class Voos extends CI_Controller
         if(isset($search_options['data']) and !empty($search_options['data'])) {
             $data['search'] = $this->voo_model->search($search_options);
         }
-        if(isset($search_options['origemId']) and !empty($search_options['origemId'])) {
+        if(isset($search_options['origemNome']) and !empty($search_options['origemNome'])) {
             $data['search'] = $this->voo_model->search($search_options);
         }
-        if(isset($search_options['destinoId']) and !empty($search_options['destinoId'])) {
+        if(isset($search_options['destinoNome']) and !empty($search_options['destinoNome'])) {
             $data['search'] = $this->voo_model->search($search_options);
         }
         if(isset($search_options['nReserva']) and !empty($search_options['nReserva'])) {

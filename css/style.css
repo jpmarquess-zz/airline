@@ -16,16 +16,31 @@
 	table tbody tr td:nth-child(9) {
 		display: none !important;
 	}
+
+	#slogan {
+		text-align: center !important;
+	}
+
+	#logo {
+		text-align: center !important;
+		display: block !important;
+		padding: 0px !important;
+		margin-top: 35px !important;
+	}
 }
 
-.jumbotron div:nth-child(2) {
+.jumbotron #slogan {
+    padding-left: 40px;
+}
+
+.jumbotron #logo {
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
-	padding: 0 50px;
+    padding-right: 40px;
 }
 
-.jumbotron div:nth-child(2) span {
+.jumbotron #logo span {
 	font-size: 6em;
 	color: #212529;
     margin-top: 15px;

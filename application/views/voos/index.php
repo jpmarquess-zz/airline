@@ -19,7 +19,7 @@
 					<option></option>
 
 					<?php foreach ($origem as $origem): ?>
-						<?php echo "<option value=" . $origem['id'] . "> " . $origem['nome'] . "</option>"; ?>
+						<?php echo "<option value=" . $origem['nome'] . "> " . $origem['nome'] . "</option>"; ?>
 					<?php endforeach;?>
 				</select>
 			</div>
@@ -30,7 +30,7 @@
 					<option></option>
 
 					<?php foreach ($destino as $destino): ?>
-						<?php echo "<option value=" . $destino['id'] . "> " . $destino['nome'] . "</option>"; ?>
+						<?php echo "<option value=" . $destino['nome'] . "> " . $destino['nome'] . "</option>"; ?>
 					<?php endforeach;?>
 				</select>
 			</div>
@@ -77,6 +77,8 @@
 <?php endif; ?>
 
 <?php if ($voos) : ?>
+	<h3 class="mt-5">Reservas</h3>
+
 	<div class="table-responsive">
 		<table class="table table-bordered text-center my-5">
 			<thead>
@@ -134,6 +136,8 @@
 <?php endif; ?>
 
 <?php if ($search) : ?>
+	<h3 class="mt-5">Reservas</h3>
+	
 	<div class="table-responsive">
 		<table class="table table-bordered text-center my-5">
 			<thead>
