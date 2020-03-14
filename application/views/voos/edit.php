@@ -1,7 +1,5 @@
 <h2 class="my-5"><?=$title;?></h2>
 
-<?php print_r($test); ?>
-
 <?php
 	$data = date_create($reserva['created_at']);
 

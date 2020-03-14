@@ -115,16 +115,16 @@ class Voo_model extends CI_Model
     // Search pelo número do voo
     public function search($search_options)
     {
-        $data = array();
+        /*$data = array();
 
         if(!$this->session->userdata('isAdmin')) {
             $data = array("userId" => $this->session->userdata('user_id'));
-        }
+        }*/
 
         if(!empty($search_options['nVoo'])) {
-            $data['nVoo'] = $search_options['nVoo'];
+            $this->db->like('voo.nVoo', $search_options['nVoo']);
         }
-        if(!empty($search_options['data'])) {
+        /*if(!empty($search_options['data'])) {
             $data['data'] = $search_options['data'];
         }
         if(!empty($search_options['origemNome'])) {
@@ -144,7 +144,7 @@ class Voo_model extends CI_Model
         }
         if(!empty($search_options['identificacao'])) {
             $data['identificacao'] = $search_options['identificacao'];
-        }
+        }*/
 
         $this->db->select(
             'reserva.id as reservaId, reserva.userId, reserva.nReserva, reserva.valor,
@@ -158,12 +158,12 @@ class Voo_model extends CI_Model
         $this->db->join('origem', 'origem.id = voo.origemId');
         $this->db->join('destino', 'destino.id = voo.destinoId');
         $this->db->order_by('reserva.valor', 'DESC');
-        $query = $this->db->get_where('reserva', $data);
+        $query = $this->db->get('reserva');
 
         return $query->result_array();
     }
 
-    public function gato($id) {
+    /*public function gato($id) {
         $this->db->select(
             'reserva.id as reservaId, reserva.userId, reserva.vooId, reserva.nReserva, reserva.valor, reserva.created_at,
             users.id as catId, users.nome as userNome, users.nif,
@@ -183,5 +183,5 @@ class Voo_model extends CI_Model
         } else {
             return false;
         }
-    }
+    }*/
 }

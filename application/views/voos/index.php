@@ -2,10 +2,10 @@
 
 <?php echo form_open('voos/search'); ?>
 	<div class="clearfix">
-		<div class="col-lg-6 float-left" id="test">
+		<div class="col-lg-6 float-left" id="clear-input">
 			<div class="form-group">
 				<label>Voo</label>
-				<input type="text" name="voo" class="form-control">
+				<input type="text" name="voo" id="search-voo" class="form-control">
 			</div>
 
 			<div class="form-group">
@@ -36,7 +36,7 @@
 			</div>
 		</div>
 
-		<div class="col-lg-6 float-right" id="test">
+		<div class="col-lg-6 float-right" id="clear-input">
 			<div class="form-group">
 				<label>Reserva</label>
 				<input type="text" name="reserva" class="form-control">
@@ -59,10 +59,6 @@
 		</div>
 
 		<div class="float-right mt-3 mr-3">
-			<button type="submit" class="btn btn-info mr-3">
-				Pesquisar
-			</button>
-
 			<button type="button" class="btn btn-info" id="limpar-form">
 				Limpar
 			</button>
@@ -79,7 +75,7 @@
 <?php if ($voos) : ?>
 	<h3 class="mt-5">Reservas</h3>
 
-	<div class="table-responsive">
+	<div class="table-responsive" id="reservas-table">
 		<table class="table table-bordered text-center my-5">
 			<thead>
 				<tr>
