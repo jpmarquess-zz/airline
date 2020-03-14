@@ -195,7 +195,10 @@ class Voos extends CI_Controller
             redirect('users/login');
         }
 
+        $search_options['userId'] = $this->session->userdata("user_id");
+        $search_options['isAdmin'] = $this->session->userdata("isAdmin");
         $search_options['nVoo'] = $this->input->get("nVoo");
+        $search_options['nReserva'] = $this->input->get('nReserva');
 
         $data = $this->voo_model->search($search_options);
 

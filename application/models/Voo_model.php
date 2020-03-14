@@ -115,14 +115,12 @@ class Voo_model extends CI_Model
     // Search pelo número do voo
     public function search($search_options)
     {
-        /*$data = array();
-
-        if(!$this->session->userdata('isAdmin')) {
-            $data = array("userId" => $this->session->userdata('user_id'));
-        }*/
+        if(!$search_options['isAdmin']) {
+            $this->db->where("reserva.userId", $search_options['userId']);
+        }
 
         if(!empty($search_options['nVoo'])) {
-            $this->db->like('voo.nVoo', $search_options['nVoo']);
+            $this->db->like("voo.nVoo", $search_options["nVoo"]);
         }
         /*if(!empty($search_options['data'])) {
             $data['data'] = $search_options['data'];
@@ -132,11 +130,11 @@ class Voo_model extends CI_Model
         }
         if(!empty($search_options['destinoNome'])) {
             $data['destino.nome'] = $search_options['destinoNome'];
-        }
+        }*/
         if(!empty($search_options['nReserva'])) {
-            $data['nReserva'] = $search_options['nReserva'];
+            $this->db->like("reserva.nReserva", $search_options['nReserva']);
         }
-        if(!empty($search_options['nome'])) {
+        /*if(!empty($search_options['nome'])) {
             $data['users.nome'] = $search_options['nome'];
         }
         if(!empty($search_options['nif'])) {

@@ -14,7 +14,7 @@ class User_model extends CI_Model
             'isAdmin'       => false,
         );
 
-        // Insert user
+        // Create user
         return $this->db->insert('users', $data);
     }
 

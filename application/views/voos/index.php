@@ -1,7 +1,7 @@
 <h2 class="my-5"><?=$title;?></h2>
 
 <?php echo form_open('voos/search'); ?>
-	<div class="clearfix">
+	<div class="clearfix search-grre">
 		<div class="col-lg-6 float-left" id="clear-input">
 			<div class="form-group">
 				<label>Voo</label>
@@ -39,7 +39,7 @@
 		<div class="col-lg-6 float-right" id="clear-input">
 			<div class="form-group">
 				<label>Reserva</label>
-				<input type="text" name="reserva" class="form-control">
+				<input type="text" name="reserva" id="search-reserva" class="form-control">
 			</div>
 
 			<div class="form-group">
